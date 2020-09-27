@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import './App.css';
+// import styled from 'styled-components';
 // import Radium, { StyleRoot } from 'radium';
+import classes from './App.css';
 import Person from './Person/Person';
 
-const StyledButton = styled.button`
-  background-color: ${props => props.alt ? 'red' : 'green'};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
+// const StyledButton = styled.button`
+//   background-color: ${props => props.alt ? 'red' : 'green'};
+//   color: white;
+//   font: inherit;
+//   border: 1px solid blue;
+//   padding: 8px;
+//   cursor: pointer;
   
-  &:hover {
-  background-color: ${props => props.alt ?  'salmon' : 'lightgreen'};
-  color: black;
-  }
-`;
+//   &:hover {
+//   background-color: ${props => props.alt ?  'salmon' : 'lightgreen'};
+//   color: black;
+//   }
+// `;
 
 class App extends Component {
  
@@ -79,11 +79,10 @@ class App extends Component {
       //   cursor: 'pointer',
       //   ':hover': {
       //     backgroundColor: 'lightgreen',
-      //     color: 'black'
-      //   }
-      // };
+      //     color: 'button null;
 
       let persons = null;
+      let btnClass = ' ';
 
       if(this.state.showPersons){
         persons = (
@@ -103,6 +102,7 @@ class App extends Component {
             </div> 
         );
 
+        btnClass = classes.Red;     
 
         // style.backgroundColor = 'red';
         // style[':hover'] = {
@@ -111,20 +111,20 @@ class App extends Component {
         // }
       }  
 
-      const classes = [];
+      const assignedClasses = [];
       let length = this.state.persons.length;
 
-      if(length <= 2) classes.push('red') 
-      if(length <= 1) classes.push('bold')
+      if(length <= 2) assignedClasses.push(classes.red) 
+      if(length <= 1) assignedClasses.push(classes.bold)
 
 
       return (
-          <div className="App">
+          <div className={classes.App}>
             <h1>HELLO IM React App</h1>
-            <p className={classes.join(' ')}>This is really working!</p>
-            <StyledButton 
-            alt={this.state.showPersons}
-            onClick={this.tooglePersonsHandler}>Toogle Persons</StyledButton>
+            <p className={assignedClasses.join(' ')}>This is really working!</p>
+            <button
+            className={btnClass}
+            onClick={this.tooglePersonsHandler}>Toogle Persons</button>
             {persons}
           </div>
       );
