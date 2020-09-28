@@ -1,22 +1,7 @@
 import React, { Component } from 'react';
-// import styled from 'styled-components';
-// import Radium, { StyleRoot } from 'radium';
 import classes from './App.css';
 import Person from './Person/Person';
 
-// const StyledButton = styled.button`
-//   background-color: ${props => props.alt ? 'red' : 'green'};
-//   color: white;
-//   font: inherit;
-//   border: 1px solid blue;
-//   padding: 8px;
-//   cursor: pointer;
-  
-//   &:hover {
-//   background-color: ${props => props.alt ?  'salmon' : 'lightgreen'};
-//   color: black;
-//   }
-// `;
 
 class App extends Component {
  
@@ -70,17 +55,6 @@ class App extends Component {
   
     render () {
 
-      // const style = {
-      //   backgroundColor: 'green',
-      //   color: 'white',
-      //   font: 'inherit',
-      //   border: '1px solid blue',
-      //   padding: '8px',
-      //   cursor: 'pointer',
-      //   ':hover': {
-      //     backgroundColor: 'lightgreen',
-      //     color: 'button null;
-
       let persons = null;
       let btnClass = ' ';
 
@@ -90,12 +64,12 @@ class App extends Component {
               {this.state.persons.map( (person, index) => {
                 return (
                   <Person 
-                  name={person.name} 
-                  age={person.age}
-                  click={() => this.deletePersonHandler(index)}
-                  key={person.id}
-                  changed={(event) => this.nameChangedHandler(event, person.id)}
-                  >
+                    name={person.name} 
+                    age={person.age}
+                    key={person.id}
+                    click={() => this.deletePersonHandler(index)}
+                    changed={(event) => this.nameChangedHandler(event, person.id)}
+                    >
                   </Person>
                 )
               })}
@@ -103,12 +77,6 @@ class App extends Component {
         );
 
         btnClass = classes.Red;     
-
-        // style.backgroundColor = 'red';
-        // style[':hover'] = {
-        //   backgroundColor: 'salmon',
-        //   color: 'black'
-        // }
       }  
 
       const assignedClasses = [];
@@ -154,3 +122,38 @@ export default App;
   // { name: 'Stephanie', age: 27}
 // ]})
 // }
+
+// import styled from 'styled-components';
+// import Radium, { StyleRoot } from 'radium';
+
+// const StyledButton = styled.button`
+//   background-color: ${props => props.alt ? 'red' : 'green'};
+//   color: white;
+//   font: inherit;
+//   border: 1px solid blue;
+//   padding: 8px;
+//   cursor: pointer;
+  
+//   &:hover {
+//   background-color: ${props => props.alt ?  'salmon' : 'lightgreen'};
+//   color: black;
+//   }
+// `;
+
+      // const style = {
+      //   backgroundColor: 'green',
+      //   color: 'white',
+      //   font: 'inherit',
+      //   border: '1px solid blue',
+      //   padding: '8px',
+      //   cursor: 'pointer',
+      //   ':hover': {
+      //     backgroundColor: 'lightgreen',
+      //     color: 'button null;
+
+
+    // style.backgroundColor = 'red';
+        // style[':hover'] = {
+        //   backgroundColor: 'salmon',
+        //   color: 'black'
+        // }
