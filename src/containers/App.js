@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from './Person/Person';
-
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Aux';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+
+    console.log('[App.js] constructor');
+  };
  
   state = {
     persons: [
@@ -12,95 +20,101 @@ class App extends Component {
       { id: 3, name: 'Stephanie', age: 26}
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true,
+    changedCounter: 0
   }
-  
-  // switchNameHandler = (newName) => {
-  //   // DO NOT do this  persons[0]: 'Manu', age: 29},
-  //     { name: 'Stephanie', age: 27}
-  //     ]
-  //   })
-  // }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps ',props);
+    return state;
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  };
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+  };
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
+  };
 
   deletePersonHandler = (personIndex) => {
     // const persons = this.state.persons.slice();
 
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
-    this.setState({ persons: persons })
-  } 
+    this.setState({ persons: persons });
+  };
 
   nameChangedHandler = (event, id) => {
 
     const personIndex = this.state.persons.findIndex(p => { return p.id === id; })
-
     const person = {...this.state.persons[personIndex]};
 
     // const person = Object.assign({}, this.state.persons[personIndex]);
 
     person.name = event.target.value;
-
     const persons = [...this.state.persons];
-
     persons[personIndex] = person;
 
-    this.setState( { persons: persons } )
-  }
+    this.setState({ persons: persons });
+  };
 
   tooglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-
-    this.setState({ showPersons: !doesShow })
-  }
+    this.setState({ showPersons: !doesShow });
+  };
   
     render () {
 
+      console.log('[App.js] render')
+
       let persons = null;
-      let btnClass = ' ';
+      let show = this.state.showCockpit;
 
       if(this.state.showPersons){
         persons = (
           <div>
-              {this.state.persons.map( (person, index) => {
-                return (
-                  <Person 
-                    name={person.name} 
-                    age={person.age}
-                    key={person.id}
-                    click={() => this.deletePersonHandler(index)}
-                    changed={(event) => this.nameChangedHandler(event, person.id)}
-                    >
-                  </Person>
-                )
-              })}
-            </div> 
+              <Persons 
+                persons={this.state.persons}
+                clicked={this.deletePersonHandler}
+                changed={this.nameChangedHandler} />
+          </div> 
         );
-
-        btnClass = classes.Red;     
       }  
 
-      const assignedClasses = [];
-      let length = this.state.persons.length;
-
-      if(length <= 2) assignedClasses.push(classes.red) 
-      if(length <= 1) assignedClasses.push(classes.bold)
-
-
       return (
-          <div className={classes.App}>
-            <h1>HELLO IM React App</h1>
-            <p className={assignedClasses.join(' ')}>This is really working!</p>
-            <button
-            className={btnClass}
-            onClick={this.tooglePersonsHandler}>Toogle Persons</button>
+          <Aux>
+            <button onClick={() => {this.setState({ showCockpit: !show})}}>Remove Cockpit</button>
+            { this.state.showCockpit ?
+            <Cockpit 
+              title={this.props.appTitle}
+              personsLength={this.state.persons.length}
+              showPersons={this.state.showPersons}
+              clicked={this.tooglePersonsHandler}
+            /> : null}
             {persons}
-          </div>
+          </Aux>
       );
     //  return React.createElement('div', {className:'App'}, React.createElement('h1', null, 'Hello There!`'))
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
+
+
+
+
+
+
+
+
+
 
 
 // React Hooks Example
