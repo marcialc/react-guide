@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import classes from './App.css';
+
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Aux';
+<<<<<<< HEAD
 import Pdf from '../components/Pdf/ReactPdf';
+=======
+import AuthContext from '../context/auth-context';
+>>>>>>> 0273e6a1575425ece8e6760c3c3085c1ff25ce11
 
 class App extends Component {
 
@@ -22,7 +27,8 @@ class App extends Component {
     otherState: 'some other value',
     showPersons: true,
     showCockpit: true,
-    changedCounter: 0
+    changedCounter: 0,
+    authenticated: false
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -62,12 +68,21 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons: persons });
+    this.setState((prevState, props) => { 
+      return {
+        persons: persons, 
+        changedCounter: prevState.changedCounter+1 
+      }
+    });
   };
 
   tooglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({ showPersons: !doesShow });
+  };
+
+  loginHandler = () => {
+    this.setState({ authenticated: true });
   };
   
     render () {
@@ -83,8 +98,14 @@ class App extends Component {
               {/* <Persons 
                 persons={this.state.persons}
                 clicked={this.deletePersonHandler}
+<<<<<<< HEAD
                 changed={this.nameChangedHandler} /> */}
                 <Pdf />
+=======
+                changed={this.nameChangedHandler} 
+                isAuthenticated={this.state.authenticated}
+              />
+>>>>>>> 0273e6a1575425ece8e6760c3c3085c1ff25ce11
           </div> 
         );
       }  
@@ -92,14 +113,22 @@ class App extends Component {
       return (
           <Aux>
             <button onClick={() => {this.setState({ showCockpit: !show})}}>Remove Cockpit</button>
+            <AuthContext.Provider 
+            value={{ 
+              authenticated: this.state.authenticated, 
+              login: this.loginHandler 
+              }} 
+            >
             { this.state.showCockpit ?
-            <Cockpit 
-              title={this.props.appTitle}
-              personsLength={this.state.persons.length}
-              showPersons={this.state.showPersons}
-              clicked={this.tooglePersonsHandler}
-            /> : null}
+              (<Cockpit 
+                title={this.props.appTitle}
+                personsLength={this.state.persons.length}
+                showPersons={this.state.showPersons}
+                clicked={this.tooglePersonsHandler}
+              /> 
+              ): null}
             {persons}
+            </AuthContext.Provider>
           </Aux>
       );
     //  return React.createElement('div', {className:'App'}, React.createElement('h1', null, 'Hello There!`'))
