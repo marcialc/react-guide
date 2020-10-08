@@ -8,7 +8,7 @@ const Cockpit = (props) => {
 
         // Http request ...
         setTimeout(() => {
-            alert('Save data to cloud!');
+            //alert('Save data to cloud!');
         }, 1000) ;
 
         return () => {

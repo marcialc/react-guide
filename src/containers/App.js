@@ -4,12 +4,12 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Aux from '../hoc/Aux';
+import Pdf from '../components/Pdf/ReactPdf';
 
 class App extends Component {
 
   constructor(props){
-    super(props);
-
+    super();
     console.log('[App.js] constructor');
   };
  
@@ -20,7 +20,7 @@ class App extends Component {
       { id: 3, name: 'Stephanie', age: 26}
     ],
     otherState: 'some other value',
-    showPersons: false,
+    showPersons: true,
     showCockpit: true,
     changedCounter: 0
   }
@@ -80,10 +80,11 @@ class App extends Component {
       if(this.state.showPersons){
         persons = (
           <div>
-              <Persons 
+              {/* <Persons 
                 persons={this.state.persons}
                 clicked={this.deletePersonHandler}
-                changed={this.nameChangedHandler} />
+                changed={this.nameChangedHandler} /> */}
+                <Pdf />
           </div> 
         );
       }  
